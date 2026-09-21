@@ -1,10 +1,12 @@
 {
   "name": "plugin-b",
   "description": "Demonstration pack b. Content is placeholder; only the structure matters.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "Demo Owner",
     "email": "owner@example.com"
   },
-  "keywords": ["demo"]
+  "keywords": [
+    "demo"
+  ]
 }
