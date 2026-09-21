@@ -11,3 +11,7 @@ Placeholder guidance for the first demonstration topic.
 
 - State the convention plainly.
 - Give one example of it being followed.
+
+## Second rule
+
+- Added later, without moving the version.
