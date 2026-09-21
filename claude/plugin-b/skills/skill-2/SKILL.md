@@ -9,7 +9,7 @@ Placeholder guidance for the second demonstration topic.
 
 ## Rule
 
-- State the convention plainly.
+- State the convention plainly, then show it.
 - Give one example of it being followed.
 
 ## Additional rule
