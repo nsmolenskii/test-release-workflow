@@ -60,12 +60,26 @@ workflow's concurrency group serialises anything that does overlap.
 Four pull requests are left open on purpose. One is healthy; three are each
 broken in a different way, so a reviewer can see which job catches what.
 
+Each title states the outcome it demonstrates, so the list reads as a summary.
+
 | PR | Conventional Title | Validate Packs | Why |
 |---|---|---|---|
-| valid change | pass | pass | the shape every PR should have |
-| malformed pack | pass | **fail** | a new pack with no `package.json` and no marketplace entry |
-| malformed title | **fail** | pass | `docs:` on a `SKILL.md` would merge and ship nothing |
-| malformed skill | pass | **fail** | `SKILL.md` with no frontmatter |
+| [#7](../../pull/7) valid change | pass | pass | the shape every PR should have |
+| [#8](../../pull/8) half-wired pack | pass | **fail** | a new pack with no `package.json`, no `.releaserc.json` and no marketplace entry |
+| [#9](../../pull/9) wrong type | **fail** | pass | `docs:` on a `SKILL.md` would merge and ship nothing |
+| [#10](../../pull/10) broken skill | pass | **fail** | `SKILL.md` with no frontmatter |
+
+Each failure is isolated to one job, so it is clear which check owns which
+problem. The messages name the remedy rather than only reporting a failure:
+
+```
+rule 2: claude/plugin-c is a pack on disk but is not catalogued in marketplace.json
+rule 3: claude/plugin-c has no package.json, so releases would be scoped to the repository root
+
+this PR changes pack content but its type is 'docs', which releases nothing
+Editing a SKILL.md is never docs: it is 'refactor' when the guidance is
+restructured and 'fix' when it was wrong.
+```
 
 The title failure is the subtle one. `docs:` releases nothing, so without that
 check the change merges, CI stays green, and the pack silently keeps its old
