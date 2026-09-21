@@ -1,0 +1,7 @@
+{
+  "name": "plugin-c",
+  "description": "Third demonstration pack, deliberately left half-wired.",
+  "version": "1.0.0",
+  "author": { "name": "Demo Owner", "email": "owner@example.com" },
+  "keywords": ["demo"]
+}
