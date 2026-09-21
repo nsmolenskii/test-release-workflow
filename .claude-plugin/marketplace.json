@@ -1,0 +1,24 @@
+{
+  "name": "demo-marketplace",
+  "description": "Demonstration marketplace showing how plugin packs are validated and released.",
+  "owner": {
+    "name": "Demo Owner",
+    "email": "owner@example.com"
+  },
+  "plugins": [
+    {
+      "name": "plugin-a",
+      "source": "./claude/plugin-a",
+      "description": "First demonstration pack. Carries one skill so releases can be shown per pack.",
+      "category": "demo",
+      "tags": ["demo"]
+    },
+    {
+      "name": "plugin-b",
+      "source": "./claude/plugin-b",
+      "description": "Second demonstration pack. Exists so a change to one pack never releases the other.",
+      "category": "demo",
+      "tags": ["demo"]
+    }
+  ]
+}
