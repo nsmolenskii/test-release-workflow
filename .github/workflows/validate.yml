@@ -1,0 +1,86 @@
+name: Validate
+
+# `edited` matters for the title job: the remedy is editing the PR title, and a
+# default pull_request trigger does not fire on it, so the check would never
+# clear once the author fixed it.
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pr-title:
+    name: Conventional Title
+    # No PR context on a manual run.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+
+    steps:
+      - name: Check the title is a Conventional Commit
+        uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # The vocabulary defined in tooling/semantic-release-config/index.js.
+          # feat, fix and refactor release a version; the rest release nothing.
+          types: |
+            feat
+            fix
+            refactor
+            docs
+            chore
+            ci
+            test
+            build
+            style
+            perf
+            revert
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # The action above validates the title's shape but has no access to which
+      # files changed, so the pack-scope and releasing-type rules live here.
+      - name: Check the title against the packs this PR changes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          PR_FILES=$(gh pr view "$PR_NUMBER" --json files --jq '.files[].path')
+          export PR_FILES
+          .github/scripts/check-pr-title.sh
+
+  packs:
+    name: Validate Packs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Anthropic's own marketplace CI action, as used by claude-plugins-official.
+      # It runs `claude plugin validate` against the marketplace and every changed
+      # pack - the per-pack call is the only thing that checks SKILL.md - plus its
+      # I1-I11 policy invariants. fail-on-warnings is required, not cosmetic: the
+      # CLI reports a malformed SKILL.md as a warning and still exits 0.
+      - name: Validate the marketplace and every changed pack
+        uses: anthropics/claude-plugins-community/.github/actions/validate-plugins@426e469f322952061102b286b378c0c9733a0934
+        with:
+          marketplace-path: .claude-plugin/marketplace.json
+          # Defaults to origin/main, which does not exist here.
+          base-ref: ${{ github.event.pull_request.base.sha || 'origin/master' }}
+          skip-external: "true"
+          fail-on-warnings: "true"
+
+      - name: Check the house rules
+        run: .github/scripts/check-packs.sh

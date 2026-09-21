@@ -1,0 +1,7 @@
+{
+  "name": "@demo/semantic-release-config",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Shared semantic-release behaviour for every pack in this repository.",
+  "main": "index.js"
+}

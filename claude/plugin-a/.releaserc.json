@@ -1,0 +1,3 @@
+{
+  "extends": ["semantic-release-monorepo", "@demo/semantic-release-config"]
+}
