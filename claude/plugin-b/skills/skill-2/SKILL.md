@@ -11,3 +11,7 @@ Placeholder guidance for the second demonstration topic.
 
 - State the convention plainly.
 - Give one example of it being followed.
+
+## Additional rule
+
+- A second convention, added to demonstrate a minor release.
