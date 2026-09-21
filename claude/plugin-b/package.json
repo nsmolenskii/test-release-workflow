@@ -1,0 +1,6 @@
+{
+  "name": "plugin-b",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Present so semantic-release-monorepo can scope commits to this pack and derive its tag prefix. Not published to npm."
+}

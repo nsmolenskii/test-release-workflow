@@ -1,0 +1,57 @@
+name: Release
+
+# semantic-release pushes the release commit and tag straight to master; there
+# is no release PR to approve.
+concurrency:
+  group: ${{ github.workflow }}
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  release:
+    name: Release changed packs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: master
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install release tooling
+        run: npm install --no-audit --no-fund
+
+      # One run per pack: semantic-release is single-package by design, and
+      # semantic-release-monorepo is what scopes a run to that pack's path.
+      # Packs are discovered by their .releaserc.json, so adding one needs no
+      # edit here. No --extends flag: it overrides the file's extends, which
+      # would silently drop the shared config the pack asks for.
+      - name: Release each pack
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          PACKS=$(git ls-files -- '*/.releaserc.json' | xargs -n1 dirname | sort -u)
+          if [ -z "$PACKS" ]; then
+            echo "No packs with a .releaserc.json; nothing to release."
+            exit 0
+          fi
+          for PACK in $PACKS; do
+            echo "::group::$PACK"
+            (cd "$PACK" && npx semantic-release)
+            echo "::endgroup::"
+          done
