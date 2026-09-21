@@ -7,10 +7,11 @@ description: Use when the first demonstration topic comes up and a worked exampl
 
 Placeholder guidance for the first demonstration topic.
 
-## Rule
+## Rules
 
 - State the convention plainly, in one sentence.
 - Give one example of it being followed.
+- Say what happens when it is not.
 
 ## Second rule
 
