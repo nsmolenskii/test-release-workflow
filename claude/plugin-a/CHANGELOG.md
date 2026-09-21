@@ -1,3 +1,9 @@
+## [plugin-a-v1.0.2](https://github.com/nsmolenskii/test-release-workflow/compare/plugin-a-v1.0.1...plugin-a-v1.0.2) (2026-09-21)
+
+### Fixed
+
+* **plugin-a:** Correct skill-1 wording ([#2](https://github.com/nsmolenskii/test-release-workflow/issues/2)) ([a7fd7fe](https://github.com/nsmolenskii/test-release-workflow/commit/a7fd7fee5da10cdfc59445643bf316a94ed58ea2))
+
 # Changelog
 
 Entries below 1.0.2 are reconstructed from git history: this pack was released by
