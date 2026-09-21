@@ -16,3 +16,5 @@ Placeholder guidance for the first demonstration topic.
 ## Second rule
 
 - Added later, without moving the version.
+
+- A further clarification of the convention.
