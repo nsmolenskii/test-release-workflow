@@ -1,3 +1,9 @@
+## [plugin-a-v1.0.3](https://github.com/nsmolenskii/test-release-workflow/compare/plugin-a-v1.0.2...plugin-a-v1.0.3) (2026-09-21)
+
+### Changed
+
+* **plugin-a:** Restructure skill-1 rules ([#3](https://github.com/nsmolenskii/test-release-workflow/issues/3)) ([a9daa6e](https://github.com/nsmolenskii/test-release-workflow/commit/a9daa6e39718dfe1af9f7f467e5d626774d0db88))
+
 ## [plugin-a-v1.0.2](https://github.com/nsmolenskii/test-release-workflow/compare/plugin-a-v1.0.1...plugin-a-v1.0.2) (2026-09-21)
 
 ### Fixed
